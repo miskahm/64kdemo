@@ -1,0 +1,19 @@
+CC = C:/msys64/mingw64/bin/gcc.exe
+CFLAGS = -std=c99 -IC:/VulkanSDK/1.4.321.1/Include -Isrc
+LDFLAGS = -LC:/VulkanSDK/1.4.321.1/Lib -LC:/msys64/mingw64/lib
+LIBS = -lvulkan-1 -lglfw3 -lole32 -lwinmm -lksuser -lgdi32 -lkernel32
+
+SRCS = src/main.c src/vulkan_setup.c src/shader_loader.c src/shadertoy_compat.c src/audio_synthesis.c src/sync_system.c
+OBJS = $(SRCS:src/%.c=build/%.o)
+
+build/Vulkan64KDemo.exe: $(OBJS)
+	$(CC) $(OBJS) -o $@ $(LDFLAGS) $(LIBS)
+
+build/%.o: src/%.c
+	@if not exist build mkdir build
+	$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+	del /Q build\*.o build\*.exe
+
+.PHONY: clean

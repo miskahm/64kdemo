@@ -1,0 +1,67 @@
+# Build outputs
+vulkan-demo/build/
+*.exe
+*.o
+*.obj
+*.a
+*.lib
+*.dll
+*.so
+*.dylib
+
+# Compiled shaders
+*.spv
+
+# Debug files
+*.pdb
+*.ilk
+*.exp
+
+# Temporary files
+*.tmp
+*.log
+temp_output.txt
+
+# IDE/Editor files
+.vscode/
+.vs/
+*.swp
+*.swo
+*~
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# OpenCode internal
+.opencode/
+
+# Node modules (if any)
+node_modules/
+package-lock.json
+
+# Test files
+test.c
+**/test.c
+test_run.bat
+**/test_run.bat
+run_test.bat
+**/run_test.bat
+
+# Documentation artifacts (keep source docs)
+vulkan-demo/*_FIX*.md
+vulkan-demo/*_DEBUG*.md
+vulkan-demo/*_NOTES*.md
+vulkan-demo/INVESTIGATION_*.md
+vulkan-demo/FIXED.md
+vulkan-demo/FINAL_*.md
+
+# External tools (should be documented in README)
+Crinkler.exe
+tdm-gcc.exe
+
+# Agent documentation (internal)
+AGENTS.md
+subagent_guide.md

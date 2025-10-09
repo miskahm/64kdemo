@@ -1,0 +1,52 @@
+CC = C:/msys64/mingw64/bin/gcc.exe
+VULKAN_SDK = C:/VulkanSDK/1.4.321.1
+GLFW_DIR = C:/msys64/mingw64
+CRINKLER = crinkler.exe
+
+CFLAGS = -std=c99 -Isrc -I$(VULKAN_SDK)/Include -I$(GLFW_DIR)/include
+CFLAGS += -Os -s -ffast-math -fno-stack-protector -fno-unwind-tables -fno-asynchronous-unwind-tables
+CFLAGS += -ffunction-sections -fdata-sections -fno-ident -flto
+
+LDFLAGS = -L$(VULKAN_SDK)/Lib -L$(GLFW_DIR)/lib
+LDFLAGS += -lvulkan-1 -lglfw3 -lwinmm -lgdi32 -luser32 -lkernel32
+LDFLAGS += -Wl,--gc-sections -Wl,--strip-all -Wl,--build-id=none -static-libgcc -flto -s
+
+SOURCES = src/main.c src/vulkan_setup.c src/shader_loader.c src/shadertoy_compat.c src/audio_synthesis.c src/sync_system.c
+TARGET = build/Vulkan64KDemo.exe
+COMPRESSED = Vulkan64KDemo_64k.exe
+
+SHADERS = build/shader.vert.spv build/shader.frag.spv
+GLSLANG = $(VULKAN_SDK)/Bin/glslangValidator.exe
+
+all: $(TARGET) $(SHADERS)
+
+crinkler: $(TARGET)
+	@echo Compressing with Crinkler...
+	$(CRINKLER) /COMPMODE:MAX /OUT:$(COMPRESSED) /UNSAFEIMPORT /TINYHEADER /HASH:EMPHASH $(TARGET)
+	@echo.
+	@echo Compressed binary size:
+	@dir $(COMPRESSED) | find "$(COMPRESSED)"
+
+release: $(TARGET) $(SHADERS) crinkler
+
+$(TARGET): $(SOURCES)
+	@if not exist build mkdir build
+	$(CC) $(CFLAGS) -o $(TARGET) $(SOURCES) $(LDFLAGS)
+	@echo.
+	@echo Binary size:
+	@dir $(TARGET) | find "Vulkan64KDemo"
+
+$(SHADERS): build/shader.vert.spv build/shader.frag.spv
+
+build/shader.vert.spv: shaders/shader.vert
+	@if not exist build mkdir build
+	$(GLSLANG) -V shaders/shader.vert -o build/shader.vert.spv
+
+build/shader.frag.spv: shaders/shader.frag
+	@if not exist build mkdir build
+	$(GLSLANG) -V shaders/shader.frag -o build/shader.frag.spv
+
+clean:
+	@if exist build rmdir /s /q build
+
+.PHONY: all clean crinkler release
