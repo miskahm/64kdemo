@@ -1,16 +1,26 @@
-# Build outputs
+# Build outputs (keep final deliverables)
 vulkan-demo/build/
+!vulkan-demo/Vulkan64KDemo_64k.exe
+!vulkan-demo/glfw3.dll
+!vulkan-demo/shader.frag.spv
+!vulkan-demo/shader.vert.spv
+
+# All other executables and libraries
 *.exe
+!vulkan-demo/Vulkan64KDemo_64k.exe
 *.o
 *.obj
 *.a
 *.lib
 *.dll
+!vulkan-demo/glfw3.dll
 *.so
 *.dylib
 
-# Compiled shaders
+# Compiled shaders (except final ones)
 *.spv
+!vulkan-demo/shader.frag.spv
+!vulkan-demo/shader.vert.spv
 
 # Debug files
 *.pdb
@@ -43,8 +53,10 @@ node_modules/
 package-lock.json
 
 # Test files
-test.c
-**/test.c
+test*.c
+test*.exe
+**/test*.c
+**/test*.exe
 test_run.bat
 **/test_run.bat
 run_test.bat
@@ -58,9 +70,18 @@ vulkan-demo/INVESTIGATION_*.md
 vulkan-demo/FIXED.md
 vulkan-demo/FINAL_*.md
 
-# External tools (should be documented in README)
+# External tools (not part of distribution)
 Crinkler.exe
 tdm-gcc.exe
+gcc.exe
+upx.exe
+out.exe
+
+# Temporary build artifacts
+compile_*.txt
+help.txt
+-p/
+manual_build/
 
 # Agent documentation (internal)
 AGENTS.md
