@@ -1,13 +1,16 @@
 # 64K Vulkan Demoscene Intro
 
-A 64KB demoscene intro using Vulkan and ShaderToy-style shaders written in pure C.
+A **34.5 KB** demoscene intro using Vulkan and ShaderToy-style shaders written in pure C.
 
 ## Features
+- ✅ **Final size: 34.5 KB (under 64KB limit!)**
 - Vulkan rendering with fullscreen quad
-- ShaderToy-compatible uniforms (iTime, iResolution, iMouse, iFrame)
+- Real-time audio synthesis (140 BPM)
+- Audio-reactive visuals (bass/mid/high frequency bands)
+- ShaderToy-compatible uniforms (iTime, iResolution, iMouse, iFrame, iBass, iMid, iHigh)
 - SPIR-V shader compilation
-- Size-optimized build targeting <64KB executable
-- Cross-platform (Windows/Linux)
+- 5 unique shader scenes with 12-second transitions
+- UPX compressed executable
 
 ## Build Requirements
 - Vulkan SDK 1.3+
@@ -15,17 +18,27 @@ A 64KB demoscene intro using Vulkan and ShaderToy-style shaders written in pure 
 - CMake 3.10+
 - glslangValidator (from Vulkan SDK)
 
+## Quick Start
+
+**Download and run the compressed 64K intro:**
+```bash
+Vulkan64KDemo_64k.exe    # 34.5 KB - Ready to run!
+```
+
 ## Build Instructions
 
 ```bash
-# Clone and build
+# Build from source
 cd vulkan-demo
-mkdir build && cd build
-cmake ..
-make
+build.bat                # Builds debug + release
 
-# Run
-./Vulkan64KDemo
+# Run uncompressed builds
+build\Vulkan64KDemo_debug.exe    # Debug build (914 KB)
+build\Vulkan64KDemo.exe          # Release build (70 KB)
+
+# Compress with UPX (optional - already included)
+upx.exe --best --ultra-brute -o Vulkan64KDemo_64k.exe build\Vulkan64KDemo.exe
+# Result: 34.5 KB compressed executable
 ```
 
 ## Project Structure
@@ -51,7 +64,8 @@ shaders/
 - Release build uses `-Os` for size optimization
 - Static linking to reduce dependencies
 - Strip symbols with `-s`
-- Final compression with Crinkler (Windows) for <64KB target
+- **UPX compression: 71,680 → 35,328 bytes (49.29% ratio)**
+- **Final size: 34.5 KB** (46% under 64KB limit) ✅
 
 ## Shader Development
 Shaders use ShaderToy-compatible uniforms:
@@ -64,9 +78,17 @@ layout(binding = 0) uniform UniformBufferObject {
 } ubo;
 ```
 
-## Next Steps
-- [ ] Add audio synthesis (sointu/4klang)
-- [ ] Implement Rocket sync for music-visual synchronization
-- [ ] Add visual effects (raymarching, fractals, particles)
-- [ ] Apply shader minification
-- [ ] Final compression with Crinkler
+## Features Completed ✅
+- ✅ Audio synthesis (miniaudio-based)
+- ✅ Audio-reactive visuals synchronized to music
+- ✅ Visual effects (raymarching, fractals, particles, Menger cubes)
+- ✅ Shader minification
+- ✅ Final compression with UPX (34.5 KB)
+- ✅ **64KB target achieved!**
+
+## Build Stats
+- Debug build: 935,814 bytes (914 KB)
+- Release build: 71,680 bytes (70 KB)
+- **Compressed: 35,328 bytes (34.5 KB)** 🎉
+- Compression ratio: 49.29%
+- Under 64KB limit by: 30,208 bytes (46%)
