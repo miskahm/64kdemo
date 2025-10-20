@@ -6,6 +6,9 @@ A **34.5 KB** demoscene intro using Vulkan and ShaderToy-style shaders written i
 ![Status: Release Ready](https://img.shields.io/badge/status-release%20ready-success)
 ![Platform: Windows](https://img.shields.io/badge/platform-windows-blue)
 
+<img width="1920" height="1080" alt="BrahmanbullSingle" src="https://github.com/user-attachments/assets/0440c7be-ca1c-4af3-b1c4-4db22d40687b" />
+
+
 ## ⚡ Quick Start (For Users)
 
 **Just want to run the demo?**
